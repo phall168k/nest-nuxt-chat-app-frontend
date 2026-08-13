@@ -1,34 +1,42 @@
-import { defu } from 'defu'
+import type { FetchOptions } from 'ofetch'
+
+export interface ApiErrorData {
+  message?: string | string[]
+  error?: string
+}
+
+export type ApiOptions = Omit<FetchOptions, 'baseURL'>
 
 export const useApi = async <T>(
   url: string,
-  options: {
-    method?: 'get' | 'post' | 'put' | 'patch' | 'delete'
-    params?: any
-    body?: any
-    headers?: Record<string, string>
-  } = {},
+  options: ApiOptions = {},
   authOnly: boolean = true
 ): Promise<T> => {
-  const accessToken = useCookie('token');
+  const accessToken = useCookie<string | null>('token')
   const config = useRuntimeConfig()
+  const headers = new Headers(options.headers as HeadersInit | undefined)
+
+  if (accessToken.value) {
+    headers.set('Authorization', `Bearer ${accessToken.value}`)
+  }
 
   try {
     return await $fetch<T>(url, {
       baseURL: config.public.apiBaseUrl,
       ...options,
-      headers: defu(options.headers, accessToken.value
-        ? { Authorization: `Bearer ${accessToken.value}` }
-        : {}
-      ),
+      headers,
     })
   } catch (error: any) {
-    if (authOnly && error?.status === 401) {
-    //   await auth.logout()
+    const status = error?.statusCode ?? error?.status
+
+    if (authOnly && status === 401) {
+      accessToken.value = null
+      await navigateTo('/auth/sign-in')
     }
-    if (authOnly && error?.status === 403) {
-      navigateTo('/403');
+    if (authOnly && status === 403) {
+      await navigateTo('/403')
     }
+
     throw error
   }
 }

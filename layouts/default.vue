@@ -25,7 +25,7 @@
                 <el-dropdown-item>
                   <Icon name="meteor-icons:lock" :size="20"/>&nbsp;&nbsp;Change Password
                 </el-dropdown-item>
-                <el-dropdown-item>
+                <el-dropdown-item divided @click="logout">
                   <Icon name="ant-design:logout-outlined" :size="20"/>&nbsp;&nbsp;Logout
                 </el-dropdown-item>
               </el-dropdown-menu>
@@ -40,6 +40,9 @@
 </template>
 
 <script lang="ts" setup>
-
-
+const logout = async () => {
+  const accessToken = useCookie<string | null>('token')
+  accessToken.value = null
+  await navigateTo('/auth/sign-in')
+}
 </script>
