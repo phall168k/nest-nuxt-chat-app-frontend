@@ -82,7 +82,10 @@
   interface SignInResponse {
     accessToken?: string;
     access_token?: string;
-    token?: string;
+    token?: string | {
+      accessToken?: string;
+      access_token?: string;
+    };
     data?: {
       accessToken?: string;
       access_token?: string;
@@ -135,18 +138,22 @@
 
       const token = response.accessToken
         ?? response.access_token
-        ?? response.token
+        ?? (typeof response.token === 'string' ? response.token : undefined)
+        ?? (typeof response.token === 'object' ? response.token.accessToken : undefined)
+        ?? (typeof response.token === 'object' ? response.token.access_token : undefined)
         ?? response.data?.accessToken
         ?? response.data?.access_token
         ?? response.data?.token;
 
-      if (token) {
-        const accessToken = useCookie('token', {
-          sameSite: 'lax',
-          secure: import.meta.env.PROD,
-        });
-        accessToken.value = token;
+      if (!token) {
+        throw new Error('The sign-in response did not include an access token.');
       }
+
+      const accessToken = useCookie<string | null>('token', {
+        sameSite: 'lax',
+        secure: import.meta.env.PROD,
+      });
+      accessToken.value = token;
 
       const redirect = typeof route.query.redirect === 'string'
         && route.query.redirect.startsWith('/')
