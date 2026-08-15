@@ -40,9 +40,12 @@
 </template>
 
 <script lang="ts" setup>
-const logout = async () => {
-  const accessToken = useCookie<string | null>('token')
-  accessToken.value = null
-  await navigateTo('/auth/sign-in')
-}
+  const { $socket } = useNuxtApp();
+  const logout = async () => {
+    const accessToken = useCookie<string | null>('token');
+    
+    accessToken.value = null
+    $socket.disconnect();
+    await navigateTo('/auth/sign-in')
+  }
 </script>
