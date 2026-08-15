@@ -91,6 +91,10 @@
       access_token?: string;
       token?: string;
     };
+    users: {
+      id: string;
+      username: string;
+    }
   }
 
   const formRef = ref<FormInstance>();
@@ -154,6 +158,12 @@
         secure: import.meta.env.PROD,
       });
       accessToken.value = token;
+
+      const auth = useCookie<any | null>('auth', {
+        sameSite: 'lax',
+        secure: import.meta.env.PROD,
+      });
+      auth.value = response.users;
 
       const redirect = typeof route.query.redirect === 'string'
         && route.query.redirect.startsWith('/')
