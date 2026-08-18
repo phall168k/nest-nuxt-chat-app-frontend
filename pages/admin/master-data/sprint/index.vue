@@ -14,6 +14,7 @@ interface SprintRecord {
   status: string
   projectId: string
   project: Project
+  taskCount: number
   createdByUserId: string
   createdByUser: Person
   createdAt: string
@@ -162,6 +163,13 @@ onMounted(loadSprints)
         </el-table-column>
         <el-table-column :label="$t('sprint.status')" width="140" align="center">
           <template #default="{ row }"><el-tag :type="statusType(row.status)" effect="light" round>{{ $t(sprintStatusKey(row.status)) }}</el-tag></template>
+        </el-table-column>
+        <el-table-column :label="$t('sprint.task_count')" width="120" align="center">
+          <template #default="{ row }">
+            <el-tag type="primary" effect="plain" round>
+              <span class="status-label"><Icon name="lucide:list-checks" size="14" />{{ row.taskCount ?? 0 }}</span>
+            </el-tag>
+          </template>
         </el-table-column>
         <el-table-column :label="$t('sprint.created_by')" min-width="160">
           <template #default="{ row }">{{ row.createdByUser?.fullName || '—' }}</template>

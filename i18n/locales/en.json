@@ -122,6 +122,7 @@
         "select_project": "Select project",
         "status": "Status",
         "select_status": "Select status",
+        "task_count": "Tasks",
         "created_by": "Created by",
         "actions": "Actions",
         "save": "Save",
@@ -164,6 +165,19 @@
             "delete": "Unable to delete the sprint",
             "projects": "Unable to load project options"
         }
+    },
+    "task": {
+        "title": "Tasks", "create": "Add task", "edit": "Edit task", "delete": "Delete task",
+        "name": "Task name", "description_optional": "Description (optional)", "start_date": "Start date", "end_date": "End date", "period": "Period",
+        "assignee": "Assigned to", "reporter": "Reports to", "sprint": "Sprint", "project": "Project", "status": "Status", "actions": "Actions",
+        "select_user": "Select user", "select_project": "Select project", "select_sprint": "Select sprint", "select_status": "Select status",
+        "save": "Save", "cancel": "Cancel", "retry": "Retry", "search": "Search tasks", "filter_status": "Status", "all_statuses": "All statuses", "filter_creator": "Created by", "filter_assignee": "Assigned to", "filter_reporter": "Reports to", "filter_project": "Project", "filter_sprint": "Sprint", "filter_start_date": "Starts from", "filter_end_date": "Ends by", "clear_filters": "Clear filters", "empty": "No tasks found",
+        "delete_confirmation": "Delete {name}? This action cannot be undone.",
+        "statuses": { "todo": "To Do", "pending": "Pending", "in_progress": "In Progress", "completed": "Completed", "due_date": "Due Date" },
+        "pagination": { "total": "{total} tasks total", "page": "Page {page} of {pages}", "per_page": "Rows per page" },
+        "validation": { "name": "Task name is required", "start_date": "Start date is required", "end_date": "End date is required", "date_range": "End date must be on or after the start date", "status": "Status is required", "assignee": "Assignee is required", "reporter": "Reporter is required", "project": "Project is required", "sprint": "Sprint is required" },
+        "success": { "created": "Task created successfully", "updated": "Task updated successfully", "deleted": "Task deleted successfully" },
+        "error": { "load": "Unable to load tasks", "save": "Unable to save the task", "delete": "Unable to delete the task", "options": "Unable to load form options" }
     },
     "logout": {
         "title": "Logout"
