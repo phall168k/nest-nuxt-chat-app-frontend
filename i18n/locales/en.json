@@ -1,0 +1,13 @@
+{
+    "real_time_updates_active": "Real-time updates active",
+    "connected": "Connected",
+    "workspace": {
+        "title": "Workspace"
+    },
+    "overview": {
+        "title": "Overview"
+    },
+    "logout": {
+        "title": "Logout"
+    }
+}

@@ -69,7 +69,6 @@
 
   definePageMeta({
     layout: 'auth',
-    middleware: 'guest',
   });
 
   const route = useRoute();

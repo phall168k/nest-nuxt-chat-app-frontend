@@ -9,6 +9,23 @@ export default defineNuxtConfig({
     '@nuxt/icon',
     '@element-plus/nuxt',
   ],
+  i18n: {
+    locales: [
+      {
+        code: 'en',
+        file: 'en.json',
+        language: 'en-US',
+      },
+      {
+        code: 'km',
+        file: 'km.json',
+        language: 'KM',
+      },
+    ],
+    defaultLocale: 'en',
+    langDir: 'locales/',
+    strategy: 'no_prefix',
+  },
   runtimeConfig: {
     public: {
       apiBaseUrl: process.env.API_BASE_URL,
