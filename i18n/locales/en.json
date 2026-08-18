@@ -67,6 +67,8 @@
         "name_en": "English name",
         "name_kh": "Khmer name",
         "status": "Status",
+        "select_status": "Select status",
+        "sprint_count": "Sprints",
         "created_by": "Created by",
         "created_at": "Created",
         "actions": "Actions",
@@ -103,6 +105,64 @@
             "load": "Unable to load projects",
             "save": "Unable to save the project",
             "delete": "Unable to delete the project"
+        }
+    },
+    "sprint": {
+        "title": "Sprints",
+        "create": "Add sprint",
+        "edit": "Edit sprint",
+        "delete": "Delete sprint",
+        "name": "Sprint name",
+        "description": "Description",
+        "description_optional": "Description (optional)",
+        "start_date": "Start date",
+        "end_date": "End date",
+        "period": "Period",
+        "project": "Project",
+        "select_project": "Select project",
+        "status": "Status",
+        "select_status": "Select status",
+        "created_by": "Created by",
+        "actions": "Actions",
+        "save": "Save",
+        "cancel": "Cancel",
+        "retry": "Retry",
+        "search": "Search sprints",
+        "filter_status": "Filter by status",
+        "all_statuses": "All statuses",
+        "empty": "No sprints found",
+        "delete_confirmation": "Delete {name}? This action cannot be undone.",
+        "statuses": {
+            "todo": "To Do",
+            "pending": "Pending",
+            "in_progress": "In Progress",
+            "completed": "Completed",
+            "due_date": "Due Date"
+        },
+        "pagination": {
+            "total": "{total} sprints total",
+            "page": "Page {page} of {pages}",
+            "per_page": "Rows per page"
+        },
+        "validation": {
+            "name": "Sprint name is required",
+            "description": "Description is required",
+            "start_date": "Start date is required",
+            "end_date": "End date is required",
+            "date_range": "End date must be on or after the start date",
+            "status": "Status is required",
+            "project": "Project is required"
+        },
+        "success": {
+            "created": "Sprint created successfully",
+            "updated": "Sprint updated successfully",
+            "deleted": "Sprint deleted successfully"
+        },
+        "error": {
+            "load": "Unable to load sprints",
+            "save": "Unable to save the sprint",
+            "delete": "Unable to delete the sprint",
+            "projects": "Unable to load project options"
         }
     },
     "logout": {

@@ -20,6 +20,7 @@ const menu = [
   { title: 'Conversations', to: '/conversations', icon: 'clarity:dashboard-line', count: 12 },
   { title: 'user.title', to: '/admin/system/user', icon: 'lucide:user-round' },
   { title: 'project.title', to: '/admin/master-data/project', icon: 'lucide:folder-kanban' },
+  { title: 'sprint.title', to: '/admin/master-data/sprint', icon: 'lucide:calendar-range' },
 ]
 const active = (to: string) => to === '/' ? route.path === '/' : route.path.startsWith(to)
 const isLoggingOut = ref(false)
