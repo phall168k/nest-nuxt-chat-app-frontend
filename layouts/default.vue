@@ -122,10 +122,18 @@ const handleChangeLanguage = async () => {
         </div>
           <p>{{ $t('real_time_updates_active') }}</p>
         </div>
-        <div class="user"><span class="user-icon"><el-icon><UserFilled /></el-icon></span><div><b>{{ auth.fullName }}</b><small>Administrator</small></div></div>
+        <div class="user">
+          <span class="user-icon">
+            <Icon name="vadivam:user-round"/>
+          </span>
+          <div>
+            <b>{{ auth.fullName }}</b>
+            <small>Administrator</small>
+          </div>
+        </div>
         <button class="action logout" type="button" :disabled="isLoggingOut" @click="logout">
           <Icon name="solar:logout-linear"/>
-          <span>{{ $t('logout.title') }}</span>
+          <span class="action-label">{{ $t('logout.title') }}</span>
         </button>
       </div>
     </aside>
@@ -142,6 +150,6 @@ header{position:fixed;z-index:30;inset:0 0 auto;height:var(--head);display:flex;
 aside{position:fixed;z-index:25;top:var(--head);bottom:0;left:0;width:var(--side);display:flex;flex-direction:column;padding:22px 14px 16px;overflow:auto;color:#acb6ce;background:linear-gradient(#101b38,#0d1731);transition:.25s}nav{flex:1}.label{margin:0 10px 10px;color:#697694;font-size:10px;font-weight:700;letter-spacing:.12em;white-space:nowrap}.manage{margin-top:28px}.nav-item{position:relative;height:46px;display:flex;align-items:center;gap:13px;margin-bottom:5px;padding:0 12px;color:#aeb7d0;border-radius:11px;text-decoration:none;transition:.18s}.nav-item:hover{color:white;background:#ffffff0f}.nav-item.active{color:white;background:#5c70f533}.nav-item.active:before{content:'';position:absolute;left:-14px;width:3px;height:24px;background:#7185ff}.nav-item .el-icon{flex:none;font-size:20px}.nav-title{flex:1;overflow:hidden;font-size:14px;font-weight:550;white-space:nowrap}.nav-item em{min-width:25px;padding:3px 7px;color:#d1d6ff;background:#7284ff30;border-radius:20px;font-size:11px;font-style:normal;font-weight:700;text-align:center}
 .connected{margin-bottom:14px;padding:14px 13px;background:#162548b3;border:1px solid #5e74b142;border-radius:10px}.connected div{display:flex;align-items:center;gap:8px;font-size:12px}.connected i{width:7px;height:7px;background:#55d273;border-radius:50%;box-shadow:0 0 9px #55d273}.connected b{flex:1;color:#f4f6ff}.connected span{color:#9fa9c5;font-size:10px}.connected p{margin:8px 0 0;color:#9fa9c5;font-size:11px}.user{display:flex;align-items:center;gap:10px;padding:12px 7px;border-top:1px solid #ffffff14}.user-icon{width:38px;height:38px;flex:none;display:grid;place-items:center;color:#dbe0ff;background:#27365e;border-radius:11px}.user div{min-width:0;display:flex;flex-direction:column}.user b{color:#f4f6ff;font-size:12px}.user small{margin-top:2px;color:#7885a5;font-size:10px}.action{width:100%;height:42px;display:flex;align-items:center;gap:12px;padding:0 12px;color:#aeb7d0;background:transparent;border:0;border-radius:10px;cursor:pointer;font-size:13px;white-space:nowrap}.logout:hover{color:#ff9299;background:#ef5d6717}.toggle{border-top:1px solid #ffffff0f;border-radius:0}.toggle:hover{color:white}
 main{min-height:100vh;margin-left:var(--side);padding:calc(var(--head) + 30px) 30px 30px;transition:.25s}.mobile-menu,.backdrop{display:none}
-.collapsed .brand b,.collapsed .label,.collapsed .nav-title,.collapsed .nav-item em,.collapsed .connected,.collapsed .user div,.collapsed .action span{display:none}.collapsed .nav-item,.collapsed .action{justify-content:center;padding:0}.collapsed .user{justify-content:center}.collapsed .brand{padding:0 24px}
-@media(max-width:760px){.shell,.shell.collapsed{--side:268px;--head:64px}.mobile-menu{display:grid;place-items:center;width:42px;margin-left:10px;border:0;background:transparent;color:#536078;font-size:21px}.brand{width:auto;flex:0 auto;padding:0 8px;background:white;color:#172033}.brand b{display:block!important}.header-main{justify-content:flex-end;padding:0 15px}.header-main>div:first-child{display:none}aside{top:0;z-index:50;width:268px;transform:translateX(-100%)}.mobile-open aside{transform:none;box-shadow:18px 0 50px #04091840}.mobile-open .backdrop{position:fixed;z-index:45;inset:0;display:block;background:#070d1d7a;backdrop-filter:blur(2px)}.collapsed .label,.collapsed .nav-title,.collapsed .nav-item em,.collapsed .connected,.collapsed .user div,.collapsed .action span{display:initial}.collapsed .nav-item,.collapsed .action{justify-content:flex-start;padding:0 12px}.collapsed .user{justify-content:flex-start}.toggle{display:none}main{margin-left:0;padding:calc(var(--head) + 20px) 18px 20px}}
+.collapsed .brand b,.collapsed .label,.collapsed .nav-title,.collapsed .nav-item em,.collapsed .connected,.collapsed .user div,.collapsed .action-label{display:none}.collapsed .nav-item,.collapsed .action{justify-content:center;padding:0}.collapsed .user{justify-content:center}.collapsed .brand{padding:0 24px}
+@media(max-width:760px){.shell,.shell.collapsed{--side:268px;--head:64px}.mobile-menu{display:grid;place-items:center;width:42px;margin-left:10px;border:0;background:transparent;color:#536078;font-size:21px}.brand{width:auto;flex:0 auto;padding:0 8px;background:white;color:#172033}.brand b{display:block!important}.header-main{justify-content:flex-end;padding:0 15px}.header-main>div:first-child{display:none}aside{top:0;z-index:50;width:268px;transform:translateX(-100%)}.mobile-open aside{transform:none;box-shadow:18px 0 50px #04091840}.collapsed .label,.collapsed .nav-title,.collapsed .nav-item em,.collapsed .connected,.collapsed .user div,.collapsed .action-label{display:initial}.collapsed .nav-item,.collapsed .action{justify-content:flex-start;padding:0 12px}.collapsed .user{justify-content:flex-start}.toggle{display:none}main{margin-left:0;padding:calc(var(--head) + 20px) 18px 20px}}
 </style>
