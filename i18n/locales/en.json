@@ -7,6 +7,58 @@
     "overview": {
         "title": "Overview"
     },
+    "user": {
+        "title": "Users",
+        "description": "Manage user accounts and access.",
+        "create": "Add user",
+        "edit": "Edit user",
+        "delete": "Delete user",
+        "username": "Username",
+        "full_name": "Full name",
+        "password": "Password",
+        "confirm_password": "Confirm password",
+        "password_optional": "Leave blank to keep the current password",
+        "active": "Active",
+        "inactive": "Inactive",
+        "account_status": "Account",
+        "status": "Status",
+        "online": "Online",
+        "offline": "Offline",
+        "created_at": "Created",
+        "actions": "Actions",
+        "yes": "Yes",
+        "no": "No",
+        "save": "Save",
+        "cancel": "Cancel",
+        "retry": "Retry",
+        "search": "Search...",
+        "empty": "No users found",
+        "pagination": {
+            "total": "{total} users total",
+            "page": "Page {page} of {pages}",
+            "per_page": "Rows per page"
+        },
+        "delete_confirmation": "Delete {name}? This action cannot be undone.",
+        "validation": {
+            "username": "Username is required",
+            "username_length": "Username must contain 3 to 50 characters",
+            "full_name": "Full name is required",
+            "password": "Password is required",
+            "password_length": "Password must contain at least 6 characters",
+            "confirm_password": "Please confirm the password",
+            "password_mismatch": "Passwords do not match"
+        },
+        "success": {
+            "created": "User created successfully",
+            "updated": "User updated successfully",
+            "deleted": "User deleted successfully"
+        },
+        "error": {
+            "load": "Unable to load users",
+            "save": "Unable to save the user",
+            "delete": "Unable to delete the user"
+        }
+    },
     "logout": {
         "title": "Logout"
     }

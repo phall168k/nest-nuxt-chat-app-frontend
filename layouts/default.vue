@@ -4,6 +4,9 @@ import { storeToRefs } from 'pinia'
 const auth = useCookie<any>('auth');
 
 const route = useRoute()
+const pageTitleKey = computed(() => (
+  typeof route.meta.title === 'string' ? route.meta.title : 'overview.title'
+))
 const collapseStore = useCollapseStore()
 const { isCollapsed } = storeToRefs(collapseStore)
 const handleToggleCollapse = () => {
@@ -15,6 +18,7 @@ const notificationCount = ref(9)
 const menu = [
   { title: 'overview.title', to: '/', icon: 'clarity:dashboard-line' },
   { title: 'Conversations', to: '/conversations', icon: 'clarity:dashboard-line', count: 12 },
+  { title: 'user.title', to: '/admin/system/user', icon: 'lucide:user-round' },
 ]
 const active = (to: string) => to === '/' ? route.path === '/' : route.path.startsWith(to)
 const isLoggingOut = ref(false)
@@ -66,7 +70,7 @@ const handleChangeLanguage = async () => {
   <div class="shell" :class="{ collapsed: isCollapsed, 'mobile-open': mobileOpen }">
     <header>
       <button class="mobile-menu" aria-label="Open navigation" @click="mobileOpen = true"><el-icon><MenuIcon /></el-icon></button>
-      <div class="brand"><span class="brand-icon"><el-icon><ChatDotRound /></el-icon></span><b>គ្រប់គ្រងការងារ</b></div>
+      <div class="brand"><span class="brand-icon"><Icon name="material-symbols-light:home-work"/></span><b>គ្រប់គ្រងការងារ</b></div>
       <div class="header-main">
         <div class="flex items-center gap-2">
           <button
@@ -76,7 +80,7 @@ const handleChangeLanguage = async () => {
           >
             <Icon :size="22" name="material-symbols:menu"/>
           </button>
-          <h1 class="font-medium">{{ route.meta.title || $t('overview.title') }}</h1>
+          <h1 class="font-medium">{{ $t(pageTitleKey) }}</h1>
         </div>
         <div class="header-actions">
           <button
