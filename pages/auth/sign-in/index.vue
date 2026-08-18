@@ -78,22 +78,26 @@
     password: string;
   };
 
+  interface AuthUser {
+    id: string;
+    username: string;
+    fullName: string;
+    status: boolean;
+    isActive: boolean;
+    createdAt: string;
+    updatedAt: string;
+  }
+
   interface SignInResponse {
-    accessToken?: string;
-    access_token?: string;
-    token?: string | {
-      accessToken?: string;
-      access_token?: string;
+    payload: {
+      users: AuthUser;
+      token: {
+        accessToken: string;
+        tokenType: string;
+        expiredIn: string;
+      };
     };
-    data?: {
-      accessToken?: string;
-      access_token?: string;
-      token?: string;
-    };
-    users: {
-      id: string;
-      username: string;
-    }
+    timestamp: number;
   }
 
   const formRef = ref<FormInstance>();
@@ -118,6 +122,7 @@
 
     if (Array.isArray(message)) return message.join(', ');
     if (typeof message === 'string') return message;
+    if (typeof error?.message === 'string') return error.message;
     return 'Unable to sign in. Please check your credentials and try again.';
   };
 
@@ -139,17 +144,11 @@
         },
       }, false);
 
-      const token = response.accessToken
-        ?? response.access_token
-        ?? (typeof response.token === 'string' ? response.token : undefined)
-        ?? (typeof response.token === 'object' ? response.token.accessToken : undefined)
-        ?? (typeof response.token === 'object' ? response.token.access_token : undefined)
-        ?? response.data?.accessToken
-        ?? response.data?.access_token
-        ?? response.data?.token;
+      const token = response.payload?.token?.accessToken;
+      const user = response.payload?.users;
 
-      if (!token) {
-        throw new Error('The sign-in response did not include an access token.');
+      if (!token || !user) {
+        throw new Error('The sign-in response is missing authentication data.');
       }
 
       const accessToken = useCookie<string | null>('token', {
@@ -158,11 +157,15 @@
       });
       accessToken.value = token;
 
-      const auth = useCookie<any | null>('auth', {
+      const auth = useCookie<AuthUser | null>('auth', {
         sameSite: 'lax',
         secure: import.meta.env.PROD,
       });
-      auth.value = response.users;
+      auth.value = user;
+
+      const { $socket } = useNuxtApp();
+      $socket.auth = { token };
+      $socket.connect();
 
       const redirect = typeof route.query.redirect === 'string'
         && route.query.redirect.startsWith('/')
