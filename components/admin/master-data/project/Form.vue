@@ -121,7 +121,7 @@ const submit = async () => {
         <el-input v-model="formData.nameKh" clearable />
       </el-form-item>
       <el-form-item :label="$t('project.status')" prop="status">
-        <el-select v-model="formData.status" class="w-full">
+        <el-select v-model="formData.status" class="w-full" :placeholder="$t('project.select_status')">
           <el-option v-for="status in statusOptions" :key="status.value" :label="$t(status.labelKey)" :value="status.value" />
         </el-select>
       </el-form-item>

@@ -21,6 +21,7 @@ interface ProjectRecord {
   nameEn: string
   nameKh: string
   status: string
+  sprintCount: number
   createdByUserId: string
   createdByUser: ProjectCreator
   createdAt: string
@@ -200,6 +201,13 @@ onMounted(loadProjects)
           <template #default="{ row }">
             <el-tag :type="row.status === 'Completed' ? 'success' : row.status === 'In Progress' ? 'primary' : row.status === 'Pending' ? 'info' : 'warning'" effect="light" round>
               {{ $t(projectStatusKey(row.status)) }}
+            </el-tag>
+          </template>
+        </el-table-column>
+        <el-table-column :label="$t('project.sprint_count')" width="120" align="center">
+          <template #default="{ row }">
+            <el-tag type="primary" effect="plain" round>
+              <span class="status-label"><Icon name="lucide:calendar-range" size="14" />{{ row.sprintCount ?? 0 }}</span>
             </el-tag>
           </template>
         </el-table-column>
