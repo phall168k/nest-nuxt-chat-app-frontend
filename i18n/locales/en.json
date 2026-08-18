@@ -59,6 +59,52 @@
             "delete": "Unable to delete the user"
         }
     },
+    "project": {
+        "title": "Projects",
+        "create": "Add project",
+        "edit": "Edit project",
+        "delete": "Delete project",
+        "name_en": "English name",
+        "name_kh": "Khmer name",
+        "status": "Status",
+        "created_by": "Created by",
+        "created_at": "Created",
+        "actions": "Actions",
+        "save": "Save",
+        "cancel": "Cancel",
+        "retry": "Retry",
+        "search": "Search projects",
+        "filter_status": "Filter by status",
+        "all_statuses": "All statuses",
+        "empty": "No projects found",
+        "delete_confirmation": "Delete {name}? This action cannot be undone.",
+        "statuses": {
+            "todo": "To Do",
+            "pending": "Pending",
+            "in_progress": "In Progress",
+            "completed": "Completed"
+        },
+        "pagination": {
+            "total": "{total} projects total",
+            "page": "Page {page} of {pages}",
+            "per_page": "Rows per page"
+        },
+        "validation": {
+            "name_en": "English name is required",
+            "name_kh": "Khmer name is required",
+            "status": "Status is required"
+        },
+        "success": {
+            "created": "Project created successfully",
+            "updated": "Project updated successfully",
+            "deleted": "Project deleted successfully"
+        },
+        "error": {
+            "load": "Unable to load projects",
+            "save": "Unable to save the project",
+            "delete": "Unable to delete the project"
+        }
+    },
     "logout": {
         "title": "Logout"
     }

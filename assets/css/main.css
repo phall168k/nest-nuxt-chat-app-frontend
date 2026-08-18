@@ -16,6 +16,7 @@
 .heading-actions { display: flex; align-items: center; gap: 10px; }
 .user-card { border-color: #e7ebf2; border-radius: 14px; }
 .search-input { width: min(320px, 100%); }
+.status-filter { width: 170px; }
 .load-error { margin-bottom: 16px; }
 .status-label { display: inline-flex; align-items: center; gap: 6px; }
 .status-label i { width: 7px; height: 7px; border-radius: 50%; background: #909399; }
@@ -38,6 +39,7 @@
   .page-heading { align-items: flex-start; flex-direction: column; }
   .heading-actions { width: 100%; align-items: stretch; flex-direction: column; }
   .search-input { width: 100%; }
+  .status-filter { width: 100%; }
   .heading-actions .el-button { width: 100%; }
   .pagination { align-items: flex-start; flex-direction: column; }
   .pagination-controls { width: 100%; justify-content: flex-start; flex-wrap: wrap; }
