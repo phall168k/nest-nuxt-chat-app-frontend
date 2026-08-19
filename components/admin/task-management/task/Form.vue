@@ -1,6 +1,9 @@
 <script setup lang="ts">
 import type { FormInstance, FormRules } from 'element-plus'
 import { ElMessage } from 'element-plus'
+import { SOCKET_EVENTS } from '~/constants/socket-event.constant';
+
+const { $socket } = useNuxtApp();
 
 interface TaskRecord { id: string; name: string; description: string; startDate: string; endDate: string; status: string; assignToUserId: string; reportToUserId: string; sprintId: string; sprint?: { projectId: string } }
 interface TaskFormData { name: string; description: string; startDate: string; endDate: string; status: string; assignToUserId: string; reportToUserId: string; sprintId: string; projectId: string }
@@ -100,9 +103,31 @@ const submit = async () => {
     assignToUserId: formData.assignToUserId, reportToUserId: formData.reportToUserId, sprintId: formData.sprintId,
   }
   try {
-    await useApi(isEditing.value ? `admin/task-management/tasks/${props.task!.id}` : 'admin/task-management/tasks', { method: isEditing.value ? 'PUT' : 'POST', body })
+    // await useApi(isEditing.value ? `admin/task-management/tasks/${props.task!.id}` : 'admin/task-management/tasks', { method: isEditing.value ? 'PUT' : 'POST', body })
+    const response = ref<any>(null);
+    if (!isEditing.value) {
+      // $socket.emit(SOCKET_EVENTS.TASK.CREATE, body);
+      response.value = await $socket
+        .timeout(5000)
+        .emitWithAck(SOCKET_EVENTS.TASK.CREATE, body);
+    } else {
+      // $socket.emit(SOCKET_EVENTS.TASK.UPDATE, {
+      //   ...body,
+      //   id: props.task!.id,
+      // });
+      response.value = await $socket
+        .timeout(5000)
+        .emitWithAck(SOCKET_EVENTS.TASK.UPDATE, {
+          ...body,
+          id: props.task?.id,
+        });
+    }
+    if (!response.value.success) {
+      ElMessage.error(t('task.error.save'));
+      return;
+    }
     ElMessage.success(t(isEditing.value ? 'task.success.updated' : 'task.success.created'))
-    emit('saved'); close()
+    close()
   } catch (error) { errorMessage.value = errorText(error, t('task.error.save')) }
   finally { isSubmitting.value = false }
 }
