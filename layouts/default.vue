@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import { storeToRefs } from 'pinia'
+import { SOCKET_EVENTS } from '~/constants/socket-event.constant';
 
+const { $socket } = useNuxtApp()
 const auth = useCookie<any>('auth');
 
 const route = useRoute()
@@ -14,7 +16,6 @@ const handleToggleCollapse = () => {
 }
 
 const mobileOpen = ref(false)
-const notificationCount = ref(9)
 const menu = [
   { title: 'overview.title', to: '/', icon: 'clarity:dashboard-line' },
   { title: 'Conversations', to: '/conversations', icon: 'clarity:dashboard-line', count: 12 },
@@ -32,7 +33,7 @@ const logout = async () => {
 
   const accessToken = useCookie<string | null>('token')
   const auth = useCookie<any>('auth')
-  const { $socket } = useNuxtApp()
+  
 
   accessToken.value = null
   auth.value = null
@@ -67,6 +68,97 @@ const handleChangeLanguage = async () => {
     await setLocale(nextLanguage.code)
   }
 }
+
+// User
+interface IUser {
+  id: string;
+  username: string;
+  fullName: string;
+  status: boolean;
+  isActive: boolean;
+  createdAt: Date;
+  updatedAt: Date;
+};
+// Task
+interface ITask {
+  id: string;
+  name: string;
+}
+
+// Notification
+interface INotification {
+  id: string;
+  senderId: string;
+  sender: IUser;
+  receiverId: string;
+  receiver: IUser;
+  taskId: string;
+  task: ITask;
+  subject: string;
+  isRed: boolean;
+  createdAt: Date;
+  updatedAt: Date;
+}
+
+interface IPayload {
+  payload: INotification[];
+  timestamp: number;
+}
+
+const notifications = ref<INotification[]>([]);
+const notificationCount = computed(() => {
+  return notifications.value.filter(
+    (item) => item.isRed === false,
+  ).length;
+});
+
+const handleUpdateNotificationStatus = async () => {
+  try {
+    const response = await $socket
+      .timeout(5000)
+      .emitWithAck(SOCKET_EVENTS.NOTIFICATION.IS_RED);
+
+    if (response?.length > 0) {
+      notifications.value = notifications.value.map((item) => ({
+        ...item,
+        isRed: true,
+      }));
+    }
+  } catch (error) {
+    console.error('Update notification status failed:', error);
+  }
+};
+
+const getNotificationLoading = ref<boolean>(false);
+const handleGetNotification = async () => {
+  notifications.value = [];
+  getNotificationLoading.value = true;
+  try {
+    const response = await useApi<IPayload>('admin/task-management/notifications/receivers');
+    notifications.value = response.payload;
+  } catch (error) {
+    console.log(error);
+  } finally {
+    getNotificationLoading.value = false;
+  }
+}
+
+
+const handleNotificationLive = (notification: INotification) => {
+  // if (notification.)
+  void new Audio('/bell.mp3').play().catch(() => undefined)
+  ElNotification.success(`${notification.sender.fullName} ${notification.subject} to you!`);
+  notifications.value.unshift(notification);
+}
+
+onMounted(() => {
+  // Connect Web Socket
+  $socket.connect();
+  // Get notification live
+  $socket.on(SOCKET_EVENTS.NOTIFICATION.LIVE, handleNotificationLive);
+  // Get notification 
+  handleGetNotification();
+})
 </script>
 
 <template>
@@ -95,16 +187,48 @@ const handleChangeLanguage = async () => {
           >
             <Icon :name="currentLanguage.icon" size="22" />
           </button>
-          <button
-            class="notify"
-            type="button"
-            :aria-label="`${notificationCount} unread notifications`"
-          >
-            <Icon name="boxicons:bell" size="21" />
-            <span v-if="notificationCount > 0" class="notification-badge">
-              {{ notificationCount > 99 ? '99+' : notificationCount }}
-            </span>
-          </button>
+          <el-dropdown trigger="click">
+            <button
+              @click="handleUpdateNotificationStatus"
+              class="notify"
+              type="button"
+              :aria-label="`${notificationCount} unread notifications`"
+            >
+              <Icon name="boxicons:bell" size="21" />
+              <span v-if="notificationCount > 0" class="notification-badge">
+                {{ notificationCount > 99 ? '99+' : notificationCount }}
+              </span>
+            </button>
+            <template #dropdown>
+              <div class="p-2 bg-white rounded-md min-w-[400px]">
+                <div
+                  v-if="getNotificationLoading"
+                >
+                  <h3 class="text-center py-5">Loading....</h3>
+                </div>
+                <div v-else>
+                  <div v-if="notifications.length === 0">
+                    <div>{{ $t('notification.empty') }}</div>
+                  </div>
+                  <div 
+                    v-else
+                    v-for="item in notifications"
+                    class="flex items-center gap-2 py-2 justify-between"
+                    :key="item.id"
+                  >
+                    <div class="flex item-center gap-2">
+                      <span class="avatar !rounded-full">{{ item.sender.fullName.charAt(0) }}</span>
+                      <div>
+                        <div class="font-medium">{{ item.sender.fullName }}</div>
+                        <div>{{ item.subject }}</div>
+                      </div>
+                    </div>
+                    <div class="text-[10px]">{{ dateFormater(item.createdAt) }}</div>
+                  </div>
+                </div>
+              </div>
+            </template>
+          </el-dropdown>
           <span class="avatar">{{ auth.fullName.charAt(0) }}</span>
         </div>
       </div>

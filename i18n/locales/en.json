@@ -179,6 +179,9 @@
         "success": { "created": "Task created successfully", "updated": "Task updated successfully", "deleted": "Task deleted successfully" },
         "error": { "load": "Unable to load tasks", "save": "Unable to save the task", "delete": "Unable to delete the task", "options": "Unable to load form options" }
     },
+    "notification": {
+        "empty": "No notification found"
+    },
     "logout": {
         "title": "Logout"
     }
